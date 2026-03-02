@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/guilhermeonrails/api-go-gin/controllers"
 )
@@ -9,6 +11,7 @@ func HandleRequest() {
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/assets", "./assets")
+
 	r.GET("/:nome", controllers.Saudacoes)
 	r.GET("/alunos", controllers.TodosAlunos)
 	r.GET("/alunos/:id", controllers.BuscarAlunoPorID)
@@ -19,5 +22,8 @@ func HandleRequest() {
 	r.GET("/alunos/", controllers.BuscaAlunoPorCPF)
 	r.GET("/index", controllers.ExibePaginaIndex)
 	r.NoRoute(controllers.RotaNaoEncontrada)
-	r.Run()
+
+	if err := r.Run(); err != nil {
+		log.Panic("Failed to start server: ", err)
+	}
 }
