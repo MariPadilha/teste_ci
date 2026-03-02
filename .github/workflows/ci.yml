@@ -45,4 +45,10 @@ jobs:
           args: controllers/ database/ models/ routes/
 
       - name: Test
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: root
+          DB_PASSWORD: root
+          DB_NAME: root
         run: go test -v main_test.go
